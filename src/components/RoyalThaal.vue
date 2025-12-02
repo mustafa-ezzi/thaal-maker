@@ -12,95 +12,88 @@
 
       <!-- Mobile Sticky Preview - Compact & Perfect -->
       <div
-        class="md:hidden sticky top-0 z-50 bg-gradient-to-b from-[#8B0000]/98 to-[#A11212]/95 backdrop-blur-xl border-b-4 border-[#FFD700]/30 shadow-2xl py-4">
+        class="md:hidden sticky top-0 z-50 backdrop-blur-xl border-b-4 border-[#FFD700]/30 shadow-2xl py-4">
         <div class="text-center">
           <div id="thaalPreviewMobile" ref="previewMobile" class="preview-wrapper-mobile mx-auto">
             <img src="/thaal.jpg" alt="Golden Thaal" class="thaal-img-mobile" />
             <img v-for="(cat, idx) in chosenCats" :key="cat" class="preview-item-mobile" :src="categoryImages[cat]"
               :style="getPreviewPositionStyleMobile(idx)" @click="showToast(selected[cat])" :alt="selected[cat]" />
           </div>
-          <p class="text-[#FFD700] font-bold text-sm mt-2 tracking-wider">Your Royal Thaal</p>
         </div>
-        <div class="flex justify-center gap-3 mt-3 px-4">
+        <!-- <div class="flex justify-center gap-3 mt-3 px-4">
           <button @click="randomThaal" class="gold-btn-mini text-xs px-4 py-2">Random</button>
           <button @click="downloadThaal" class="gold-btn-mini text-xs px-4 py-2">Download</button>
           <button @click="resetThaal" class="gold-btn-mini text-xs px-4 py-2 opacity-80">Reset</button>
-        </div>
+        </div> -->
       </div>
 
-      <div class="main-container max-w-7xl mx-auto px-4 md:px-8 pb-10">
+     <div class="main-container max-w-5xl mx-auto px-5 md:px-8 py-8">
 
-        <!-- Step Card -->
-        <div id="stepBox" class="royal-card" :class="fadeClass">
-          <!-- Progress Bar -->
-          <div class="progress-bar relative mb-8 flex justify-between items-center px-2">
-            <div v-for="(cat, i) in categories" :key="i"
-              class="progress-step w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center text-2xl md:text-3xl font-black shadow-2xl border-4 border-[#FFD700]"
-              :class="{
-                'bg-gradient-to-br from-[#FFD700] to-[#FFA500] text-black scale-125 ring-8 ring-[#FFD700]/40': i === step,
-                'bg-gradient-to-br from-[#FFD700] to-[#FFBE0B] text-black opacity-90': i < step,
-                'bg-[#8B0000]/70 text-[#FFD700]': i > step
-              }">
-              <i :class="`fas fa-${cat.icon}`"></i>
-            </div>
-            <div
-              class="absolute top-1/2 left-14 right-14 md:left-16 md:right-16 h-2 -translate-y-1/2 bg-[#FFD700]/20 rounded-full overflow-hidden">
-              <div class="h-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] transition-all duration-1000"
-                :style="{ width: `${((step + 1) / categories.length) * 100}%` }"></div>
-            </div>
-          </div>
+  <!-- Step Card – Minimal Glass -->
+  <div id="stepBox" class="royal-card" :class="fadeClass">
 
-          <h2 class="text-center font-playfair text-4xl md:text-6xl font-black text-[#FFD700] mb-3 drop-shadow-lg">
-            {{ currentCategory.title }}
-          </h2>
-          <p class="text-center text-[#FFE4B5] text-lg md:text-xl font-bold mb-8 tracking-wider">
-            Choose your royal selection
-          </p>
+    <!-- Category Title -->
+    <div class="text-center mb-10">
+      <h2 class="font-playfair text-4xl md:text-6xl font-black text-black tracking-tight">
+        {{ currentCategory.title }}
+      </h2>
+      <p class="text-gray-700 text-lg md:text-xl font-medium mt-3 tracking-wide">
+        Choose your selection
+      </p>
+    </div>
 
-          <!-- Food Items Grid -->
-          <div class="items-grid" @touchstart="handleTouchStart" @touchmove="handleTouchMove"
-            @touchend="handleTouchEnd">
-            <template v-for="(group, gi) in currentCategory.groups" :key="gi">
-              <div class="group-header">{{ group.name }}</div>
-              <div v-for="(item, ii) in group.items" :key="ii" class="royal-item-card"
-                :class="{ 'selected': selected[currentCategory.title] === item }"
-                @click="selectItem(currentCategory.title, item)">
-                <span class="item-text">{{ item }}</span>
-                <div v-if="selected[currentCategory.title] === item" class="gold-check">
-                  <svg viewBox="0 0 24 24" fill="none">
-                    <path d="M6 12L10 16L18 8" stroke="black" stroke-width="4" stroke-linecap="round"
-                      stroke-linejoin="round" />
-                  </svg>
-                </div>
-              </div>
-            </template>
-          </div>
+    <!-- Food Items Grid -->
+    <div class="items-grid" @touchstart="handleTouchStart" @touchmove="handleTouchMove" @touchend="handleTouchEnd">
+      <template v-for="(group, gi) in currentCategory.groups" :key="gi">
 
-          <!-- Navigation Buttons - FIXED FOR MOBILE -->
-          <div class="flex flex-wrap justify-center gap-4 mt-10 px-4">
-            <button v-if="step > 0" @click="prevStep" class="gold-btn w-full sm:w-auto text-lg px-10 py-4">Back</button>
-            <button v-if="step < categories.length - 1" @click="nextStep" :disabled="!selected[currentCategory.title]"
-              class="gold-btn w-full sm:w-auto text-lg px-10 py-4">Next</button>
-            <button v-else @click="finishThaal" class="gold-btn w-full sm:w-auto text-xl px-12 py-5">Finish
-              Thaal</button>
-          </div>
+        <!-- Premium Group Header -->
+        <div class="group-header">
+          <span class="header-text">{{ group.name }}</span>
         </div>
 
-        <!-- Desktop Preview -->
-        <div class="thaal-section-desktop hidden md:block mt-12">
-          <div id="thaalPreview" ref="preview" class="preview-wrapper mx-auto">
-            <img src="/thaal.jpg" alt="Golden Thaal" class="thaal-img" />
-            <img v-for="(cat, idx) in chosenCats" :key="cat" class="preview-item" :src="categoryImages[cat]"
-              :style="getPreviewPositionStyle('desktop', idx)" @click="showToast(selected[cat])" :alt="selected[cat]" />
-          </div>
-          <div class="flex justify-center gap-6 mt-8">
-            <button @click="randomThaal" class="gold-btn">Random Thaal</button>
-            <button @click="downloadThaal" class="gold-btn">Download Image</button>
-            <button @click="resetThaal" class="gold-btn opacity-90">Reset</button>
+        <!-- Items -->
+        <div v-for="(item, ii) in group.items" :key="ii"
+          class="royal-item-card"
+          :class="{ 'selected': selected[currentCategory.title] === item }"
+          @click="selectItem(currentCategory.title, item)">
+          
+          <span class="item-text">{{ item }}</span>
+          
+          <!-- Gold Checkmark -->
+          <div v-if="selected[currentCategory.title] === item" class="gold-check">
+            <svg viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 12L10 16L18 8" />
+            </svg>
           </div>
         </div>
-      </div>
+      </template>
+    </div>
 
+    <!-- Navigation Buttons -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center mt-12 px-4">
+      <button v-if="step > 0" @click="prevStep" 
+        class="gold-btn text-lg px-10 py-4">Back</button>
+      
+      <button v-if="step < categories.length - 1" @click="nextStep" 
+        :disabled="!selected[currentCategory.title]"
+        class="gold-btn text-lg px-10 py-4">Next</button>
+      
+      <button v-else @click="finishThaal" 
+        class="gold-btn text-xl px-14 py-5 font-bold">Finish Thaal</button>
+    </div>
+  </div>
+
+  <!-- Desktop Preview -->
+  <div class="thaal-section-desktop hidden md:block mt-16">
+    <div id="thaalPreview" ref="preview" class="preview-wrapper mx-auto">
+      <img src="/thaal.jpg" alt="Golden Thaal" class="thaal-img" />
+      <img v-for="(cat, idx) in chosenCats" :key="cat" 
+        class="preview-item" :src="categoryImages[cat]"
+        :style="getPreviewPositionStyle('desktop', idx)" 
+        @click="showToast(selected[cat])" :alt="selected[cat]" />
+    </div>
+  </div>
+</div>
       <!-- Toast -->
       <div
         class="toast fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold shadow-2xl text-base"
@@ -113,14 +106,14 @@
         class="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4 backdrop-blur-sm"
         @click.self="closeModal">
         <div class="royal-modal animate-scaleIn w-full max-w-md">
-          <h2 class="text-4xl md:text-5xl font-playfair font-black text-[#FFD700] text-center mb-8 leading-tight">
-            Your Royal Thaal is Ready!
+          <h2 class="text-4xl md:text-5xl font-playfair font-black text-black text-center mb-8 leading-tight">
+            Your Thaal is Ready!
           </h2>
           <div class="space-y-4 max-h-96 overflow-y-auto">
             <div v-for="(val, cat) in selected" :key="cat"
-              class="bg-white/10 backdrop-blur-lg border-2 border-[#FFD700]/50 rounded-2xl p-5 text-[#FFE4B5]">
-              <div class="font-bold text-[#FFD700] text-xl">{{ cat }}</div>
-              <div class="text-lg mt-1">{{ val }}</div>
+              class="bg-white/95 backdrop-blur-md border-2 border-[#FFD700]/40 rounded-2xl p-5 shadow-lg rounded-2xl p-5 text-[#FFE4B5]">
+              <div class="font-bold text-black text-xl">{{ cat }}</div>
+              <div class="text-lg mt-1 text-gray-900 font-medium">{{ val }}</div>
             </div>
           </div>
           <div class="flex flex-col sm:flex-row gap-4 mt-10">
@@ -216,9 +209,22 @@
       };
     },
     computed: {
-      currentCategory() { return this.categories[this.step]; }, chosenCats() { return Object.keys(this.selected); },
-      rootBg() { return { background: `linear-gradient(rgba(139,0,0,0.85), rgba(139,0,0,0.95)), url('/background.jpg'), linear-gradient(135deg,#8B0000 0%,#A11212 50%,#DC143C 100%)`, backgroundSize: 'cover', backgroundPosition: 'center top', backgroundRepeat: 'no-repeat', backgroundAttachment: 'scroll', fontFamily: "'Playfair Display', 'Inter', serif", minHeight: '100vh' }; }
-    },
+  currentCategory() { return this.categories[this.step]; },
+  chosenCats() { return Object.keys(this.selected); },
+  rootBg() {
+    return {
+      background: 'rgba(255, 255, 255, 0.97), url("/background.jpg")',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center top',
+      backgroundRepeat: 'no-repeat',
+      backgroundAttachment: 'scroll',
+      backgroundBlendMode: 'overlay',
+      fontFamily: "'Playfair Display', 'Inter', serif",
+      minHeight: '100vh',
+      color: '#111111' // Premium deep black text globally
+    };
+  }
+},
     mounted() { this.updatePreview(); window.addEventListener("resize", this.debouncedUpdatePreview); },
     beforeUnmount() { window.removeEventListener("resize", this.debouncedUpdatePreview); },
     methods: {
@@ -260,7 +266,6 @@
   :root {
     --gold: #FFD700;
     --gold-2: #FFA500;
-    --maroon: #8B0000;
     --light-gold: #FFE4B5;
   }
 
@@ -288,14 +293,7 @@
     }
   }
 
-  .royal-card {
-    background: rgba(139, 0, 0, 0.45);
-    backdrop-filter: blur(20px);
-    border: 3px solid var(--gold);
-    border-radius: 32px;
-    padding: 32px 20px;
-    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.7);
-  }
+
 
   .items-grid {
     display: grid;
@@ -310,60 +308,13 @@
     }
   }
 
-  .group-header {
-    grid-column: 1/-1;
-    font-weight: 900;
-    font-size: 17px;
-    color: var(--gold);
-    margin: 20px 0 8px;
-    padding-left: 10px;
-    border-left: 5px solid var(--gold);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
 
-  .royal-item-card {
-    background: rgba(255, 255, 255, 0.08);
-    border: 2px solid transparent;
-    color: #FFE4B5;
-    padding: 20px 14px;
-    border-radius: 20px;
-    text-align: center;
-    font-weight: 700;
-    font-size: 15px;
-    cursor: pointer;
-    transition: all 0.4s ease;
-    position: relative;
-    overflow: hidden;
-    backdrop-filter: blur(12px);
-  }
 
-  .royal-item-card:hover {
-    transform: translateY(-8px);
-    border-color: var(--gold);
-    box-shadow: 0 20px 40px rgba(255, 215, 0, 0.35);
-  }
 
-  .royal-item-card.selected {
-    background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 165, 0, 0.3));
-    border-color: var(--gold);
-    transform: scale(1.07);
-    box-shadow: 0 0 50px rgba(255, 215, 0, 0.7);
-  }
 
-  .gold-check {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 34px;
-    height: 34px;
-    background: var(--gold);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-  }
+
+
+
 
   /* Buttons */
   .gold-btn,
@@ -377,11 +328,7 @@
     transition: all 0.3s ease;
   }
 
-  .gold-btn {
-    padding: 14px 20px;
-    min-width: 140px;
-    font-size: 17px;
-  }
+
 
   .gold-btn-mini {
     padding: 10px 16px;
@@ -415,6 +362,7 @@
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
+    background: transparent;
   }
 
   .preview-item {
@@ -441,8 +389,7 @@
     position: relative;
     border-radius: 50%;
     overflow: hidden;
-    border: 10px solid var(--gold);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(255, 215, 0, 0.2);
+    background-color: black;
   }
 
   .preview-item-mobile {
@@ -476,7 +423,7 @@
   }
 
   .royal-modal {
-    background: linear-gradient(135deg, rgba(139, 0, 0, 0.97), rgba(161, 18, 18, 0.97));
+    background: white;
     border: 5px solid var(--gold);
     border-radius: 36px;
     padding: 40px 24px;
@@ -518,4 +465,128 @@
   .animate-scaleIn {
     animation: scaleIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
+
+  /* Force premium black text on white background */
+.royal-item-card,
+.group-header,
+.royal-modal * {
+  color: #111111 !important;
+}
+
+/* Keep gold only where intended */
+.group-header,
+.gold-btn,
+.gold-check,
+.progress-step i,
+.toast {
+  color: inherit !important;
+}
+
+/* Clean Glass Card */
+.royal-card {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(255, 215, 0, 0.4);
+  border-radius: 32px;
+  padding: 40px 28px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+}
+
+/* Premium Group Header – Stands Out */
+.group-header {
+  grid-column: 1 / -1;
+  margin: 32px 0 16px;
+  padding: 12px 20px;
+  background: linear-gradient(90deg, #FFD700, #FFA500);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  font-size: 18px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  position: relative;
+  text-align: center;
+}
+
+.group-header::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 40px;
+  background: rgba(255, 215, 0, 0.15);
+  border-radius: 30px;
+  backdrop-filter: blur(10px);
+  z-index: -1;
+}
+
+/* Clean Item Cards */
+.royal-item-card {
+  background: rgba(255, 255, 255, 0.75);
+  border: 2px solid transparent;
+  border-radius: 20px;
+  padding: 20px 16px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 15px;
+  color: #111111;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.royal-item-card:hover {
+  transform: translateY(-8px);
+  border-color: #FFD700;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 20px 40px rgba(255, 215, 0, 0.2);
+}
+
+.royal-item-card.selected {
+  background: rgba(255, 215, 0, 0.18);
+  border-color: #FFD700;
+  transform: scale(1.06);
+  box-shadow: 0 0 40px rgba(255, 215, 0, 0.5);
+}
+
+/* Gold Check */
+.gold-check {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  background: #FFD700;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+/* Buttons – Slightly Cleaner */
+.gold-btn {
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: black;
+  font-weight: 900;
+  border: 3px solid #B8860B;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+}
+
+.gold-btn:hover:not(:disabled) {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(255, 215, 0, 0.5);
+}
+
+.gold-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 </style>
