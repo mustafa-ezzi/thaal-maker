@@ -117,6 +117,10 @@
             </div>
           </div>
           <div class="flex flex-col sm:flex-row gap-4 mt-10">
+            <button @click="sendToWhatsApp" class="gold-btn flex-1 text-xl py-5">
+  Send to WhatsApp
+</button>
+
             <button @click="downloadThaal" class="gold-btn flex-1 text-xl py-5">Download</button>
             <button @click="closeModal" class="gold-btn flex-1 opacity-80 text-xl py-5">Close</button>
           </div>
@@ -256,6 +260,20 @@
       handleTouchStart(e) { this.touchStartX = e.touches[0].clientX; },
       handleTouchMove(e) { if (!this.touchStartX) return; const diff = this.touchStartX - e.touches[0].clientX; if (Math.abs(diff) > 50) { if (diff > 0 && this.step < this.categories.length - 1) this.nextStep(); else if (diff < 0 && this.step > 0) this.prevStep(); this.touchStartX = 0; } },
       handleTouchEnd() { this.touchStartX = 0; },
+      sendToWhatsApp() {
+  const number = "923363399445"; // <-- put your WhatsApp number here
+
+  // Build message text
+  let msg = "🍽️ *Royal Thaal Selection*%0A%0A";
+  for (const cat in this.selected) {
+    const item = this.selected[cat];
+    msg += `*${cat}:* ${item}%0A`;
+  }
+
+  const url = `https://wa.me/${number}?text=${msg}`;
+  window.open(url, "_blank");
+},
+
       debouncedUpdatePreview: (() => { let t; return function () { clearTimeout(t); t = setTimeout(() => this.updatePreview(), 100); }; })()
     }
   };
