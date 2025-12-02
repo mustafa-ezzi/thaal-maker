@@ -438,7 +438,7 @@
   },
 
   sendToWhatsApp() {
-    const number = "923363399445";
+    const number = "923032614853";
 
     let msg = "🍽️ * Thaal Selection*%0A%0A";
 
