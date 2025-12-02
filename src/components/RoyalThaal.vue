@@ -231,51 +231,235 @@
 },
     mounted() { this.updatePreview(); window.addEventListener("resize", this.debouncedUpdatePreview); },
     beforeUnmount() { window.removeEventListener("resize", this.debouncedUpdatePreview); },
-    methods: {
-      getPreviewPositionStyleMobile(idx) {
-        const total = this.chosenCats.length || 1;
-        if (total === 1) return { width: '64px', height: '64px', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', border: '6px solid white' };
-        const angle = (idx / total) * 2 * Math.PI - Math.PI / 2;
-        const radius = 78; const center = 130;
-        return { width: '52px', height: '52px', left: `${center + Math.cos(angle) * radius - 26}px`, top: `${center + Math.sin(angle) * radius - 26}px` };
-      },
-      // ← ALL YOUR OTHER METHODS (selectItem, downloadThaal, etc.) — keep exactly as before
-      selectItem(cat, item) {
-        if (this.isTransitioning) return; this.selected = { ...this.selected, [cat]: item }; this.updatePreview(); this.showToast(`${item} added!`); confetti({ particleCount: 50, spread: 70, origin: { y: 0.6 } });
-        if (this.step < this.categories.length - 1) setTimeout(() => { this.step++; this.fadeTransition(); this.scrollToTop(); }, 400);
-        else setTimeout(() => this.finishThaal(), 500);
-      },
-      fadeTransition() { this.isTransitioning = true; this.fadeClass = "fade-out"; setTimeout(() => { this.fadeClass = "fade-in"; setTimeout(() => this.isTransitioning = false, 100); }, 300); },
-      nextStep() { if (this.step < this.categories.length - 1 && this.selected[this.currentCategory.title]) { this.step++; this.fadeTransition(); this.scrollToTop(); } },
-      prevStep() { if (this.step > 0) { this.step--; this.fadeTransition(); this.scrollToTop(); } },
-      randomThaal() { this.categories.forEach(c => { const all = c.groups.flatMap(g => g.items); this.selected[c.title] = all[Math.floor(Math.random() * all.length)]; }); this.step = 0; this.updatePreview(); confetti({ particleCount: 120, spread: 100 }); },
-      resetThaal() { this.selected = {}; this.step = 0; this.updatePreview(); this.showToast("Thaal Reset!"); },
-      finishThaal() { this.showSummary = true; confetti({ particleCount: 200, spread: 120, origin: { y: 0.4 } }); },
-      closeModal() { this.showSummary = false; },
-      showToast(msg) { this.toastMsg = msg; setTimeout(() => this.toastMsg = "", 3000); },
-      getPreviewPositionStyle(view, idx) { const ref = view === 'mobile' ? this.$refs.previewMobile : this.$refs.preview; if (!ref) return {}; const size = Math.min(ref.offsetWidth, ref.offsetHeight); const radius = size * 0.36; const total = this.chosenCats.length || 1; const angle = (idx / total) * 2 * Math.PI - Math.PI / 2; const center = size / 2; const itemSize = size * 0.23; return { width: `${itemSize}px`, height: `${itemSize}px`, left: `${center + Math.cos(angle) * radius - itemSize / 2}px`, top: `${center + Math.sin(angle) * radius - itemSize / 2}px`, transform: 'translateZ(0)' }; },
-      updatePreview() { this.$nextTick(() => { }); },
-      async downloadThaal() { const preview = window.innerWidth < 768 ? this.$refs.previewMobile : this.$refs.preview; const canvas = await html2canvas(preview, { scale: 2, backgroundColor: null, logging: false }); const link = document.createElement("a"); link.download = `royal-thaal-${Date.now()}.png`; link.href = canvas.toDataURL(); link.click(); },
-      scrollToTop() { document.getElementById('stepBox')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); },
-      handleTouchStart(e) { this.touchStartX = e.touches[0].clientX; },
-      handleTouchMove(e) { if (!this.touchStartX) return; const diff = this.touchStartX - e.touches[0].clientX; if (Math.abs(diff) > 50) { if (diff > 0 && this.step < this.categories.length - 1) this.nextStep(); else if (diff < 0 && this.step > 0) this.prevStep(); this.touchStartX = 0; } },
-      handleTouchEnd() { this.touchStartX = 0; },
-      sendToWhatsApp() {
-  const number = "923363399445"; // <-- put your WhatsApp number here
+   methods: {
+  getPreviewPositionStyleMobile(idx) {
+    const total = this.chosenCats.length || 1;
+    if (total === 1)
+      return {
+        width: '64px',
+        height: '64px',
+        left: '50%',
+        top: '50%',
+        transform: 'translate(-50%, -50%)',
+        border: '6px solid white'
+      };
 
-  // Build message text
-  let msg = "🍽️ *Royal Thaal Selection*%0A%0A";
-  for (const cat in this.selected) {
-    const item = this.selected[cat];
-    msg += `*${cat}:* ${item}%0A`;
-  }
+    const angle = (idx / total) * 2 * Math.PI - Math.PI / 2;
+    const radius = 78;
+    const center = 130;
 
-  const url = `https://wa.me/${number}?text=${msg}`;
-  window.open(url, "_blank");
+    return {
+      width: '52px',
+      height: '52px',
+      left: `${center + Math.cos(angle) * radius - 26}px`,
+      top: `${center + Math.sin(angle) * radius - 26}px`
+    };
+  },
+
+  // ← ALL YOUR OTHER METHODS (selectItem, downloadThaal, etc.)
+  selectItem(cat, item) {
+    if (this.isTransitioning) return;
+
+    this.selected = { ...this.selected, [cat]: item };
+    this.updatePreview();
+    this.showToast(`${item} added!`);
+
+    confetti({
+      particleCount: 50,
+      spread: 70,
+      origin: { y: 0.6 }
+    });
+
+    if (this.step < this.categories.length - 1) {
+  setTimeout(() => {
+    this.step++;
+    this.fadeTransition();
+
+    // ⭐ FIX: scroll AFTER fade animation finishes
+    setTimeout(() => this.scrollToTop(), 450);
+
+  }, 400);
+}
+ else {
+      setTimeout(() => this.finishThaal(), 500);
+    }
+  },
+
+  fadeTransition() {
+  this.isTransitioning = true;
+  this.fadeClass = "fade-out";
+
+  setTimeout(() => {
+    this.fadeClass = "fade-in";
+
+    setTimeout(() => {
+      this.isTransitioning = false;
+      this.scrollToTop();       // ← moves here 🎉
+    }, 120);
+
+  }, 300);
 },
 
-      debouncedUpdatePreview: (() => { let t; return function () { clearTimeout(t); t = setTimeout(() => this.updatePreview(), 100); }; })()
+  nextStep() {
+    if (
+      this.step < this.categories.length - 1 &&
+      this.selected[this.currentCategory.title]
+    ) {
+      this.step++;
+      this.fadeTransition();
+      this.scrollToTop();
     }
+  },
+
+  prevStep() {
+    if (this.step > 0) {
+      this.step--;
+      this.fadeTransition();
+      this.scrollToTop();
+    }
+  },
+
+  randomThaal() {
+    this.categories.forEach(c => {
+      const all = c.groups.flatMap(g => g.items);
+      this.selected[c.title] = all[Math.floor(Math.random() * all.length)];
+    });
+
+    this.step = 0;
+    this.updatePreview();
+
+    confetti({
+      particleCount: 120,
+      spread: 100
+    });
+  },
+
+  resetThaal() {
+    this.selected = {};
+    this.step = 0;
+    this.updatePreview();
+    this.showToast("Thaal Reset!");
+  },
+
+  finishThaal() {
+    this.showSummary = true;
+
+    confetti({
+      particleCount: 200,
+      spread: 120,
+      origin: { y: 0.4 }
+    });
+  },
+
+  closeModal() {
+    this.showSummary = false;
+  },
+
+  showToast(msg) {
+    this.toastMsg = msg;
+    setTimeout(() => (this.toastMsg = ""), 3000);
+  },
+
+  getPreviewPositionStyle(view, idx) {
+    const ref =
+      view === "mobile" ? this.$refs.previewMobile : this.$refs.preview;
+
+    if (!ref) return {};
+
+    const size = Math.min(ref.offsetWidth, ref.offsetHeight);
+    const radius = size * 0.36;
+    const total = this.chosenCats.length || 1;
+    const angle = (idx / total) * 2 * Math.PI - Math.PI / 2;
+    const center = size / 2;
+    const itemSize = size * 0.23;
+
+    return {
+      width: `${itemSize}px`,
+      height: `${itemSize}px`,
+      left: `${center + Math.cos(angle) * radius - itemSize / 2}px`,
+      top: `${center + Math.sin(angle) * radius - itemSize / 2}px`,
+      transform: "translateZ(0)"
+    };
+  },
+
+  updatePreview() {
+    this.$nextTick(() => {});
+  },
+
+  async downloadThaal() {
+    const preview =
+      window.innerWidth < 768
+        ? this.$refs.previewMobile
+        : this.$refs.preview;
+
+    const canvas = await html2canvas(preview, {
+      scale: 2,
+      backgroundColor: null,
+      logging: false
+    });
+
+    const link = document.createElement("a");
+    link.download = `royal-thaal-${Date.now()}.png`;
+    link.href = canvas.toDataURL();
+    link.click();
+  },
+
+  scrollToTop() {
+  const scrollArea = document.querySelector(".fixed.inset-0") || window;
+
+  scrollArea.scrollTo({
+    top: 210,
+    behavior: "smooth"
+  });
+},
+
+  handleTouchStart(e) {
+    this.touchStartX = e.touches[0].clientX;
+  },
+
+  handleTouchMove(e) {
+    if (!this.touchStartX) return;
+
+    const diff = this.touchStartX - e.touches[0].clientX;
+
+    if (Math.abs(diff) > 50) {
+      if (diff > 0 && this.step < this.categories.length - 1) {
+        this.nextStep();
+      } else if (diff < 0 && this.step > 0) {
+        this.prevStep();
+      }
+
+      this.touchStartX = 0;
+    }
+  },
+
+  handleTouchEnd() {
+    this.touchStartX = 0;
+  },
+
+  sendToWhatsApp() {
+    const number = "923363399445";
+
+    let msg = "🍽️ * Thaal Selection*%0A%0A";
+
+    for (const cat in this.selected) {
+      const item = this.selected[cat];
+      msg += `*${cat}:* ${item}%0A`;
+    }
+
+    const url = `https://wa.me/${number}?text=${msg}`;
+    window.open(url, "_blank");
+  },
+
+  debouncedUpdatePreview: (() => {
+    let t;
+    return function () {
+      clearTimeout(t);
+      t = setTimeout(() => this.updatePreview(), 100);
+    };
+  })()
+}
+
   };
 </script>
 
