@@ -530,7 +530,7 @@
     idx++;
   }
 
-  msg += `\n🔗 *Website:* https://shabbirhussaincatering.com`;
+  msg += `\n🔗 *Website:* https://shabbirhussaincatering.vercel.app/`;
 
   const url = `https://wa.me/${number}?text=${encodeURIComponent(msg)}`;
   window.open(url, "_blank");
