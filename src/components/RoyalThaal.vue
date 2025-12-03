@@ -3,15 +3,12 @@
   <div>
     <SplashScreen v-if="!started" @start="started = true" />
 
-    <div v-else class="fixed inset-0 overflow-y-auto" :style="rootBg">
-      <!-- Header -->
-      <!-- <header class="text-center py-6 md:py-12">
-        <img src="/download.png" alt="Royal Thaal"
-          class="mx-auto mb-4 w-20 h-20 md:w-24 md:h-24 rounded-full shadow-2xl border-4 border-black p-2 bg-white/90" />
-      </header> -->
+    <div v-else class="fixed inset-0 overflow-y-auto bg-gradient-to-br from-amber-50 via-rose-50 to-orange-50"
+      :style="rootBg">
 
       <!-- Mobile Sticky Preview -->
-      <div class="md:hidden sticky top-0 z-50 backdrop-blur-2xl bg-white/95 border-b-4 border-black/20 shadow-2xl py-4">
+      <div
+        class="md:hidden sticky top-0 z-50 backdrop-blur-2xl bg-white/90 border-b-4 border-amber-400 shadow-2xl py-4">
         <div class="text-center">
           <div id="thaalPreviewMobile" ref="previewMobile" class="preview-wrapper-mobile mx-auto">
             <img src="/thaal.jpg" alt="Golden Thaal" class="thaal-img-mobile" />
@@ -27,12 +24,10 @@
         <!-- Step Card -->
         <div v-if="step < categories.length" id="stepBox" class="royal-card" :class="fadeClass">
           <div class="text-center mb-10">
-            <h2 class="font-playfair text-5xl md:text-7xl font-black text-black tracking-tighter">
+            <h2 class="font-playfair text-5xl md:text-7xl font-black text-amber-900 tracking-tighter drop-shadow-lg">
               {{ currentCategory.title }}
             </h2>
-            <p class="text-gray-700 text-lg md:text-xl font-light mt-4 tracking-widest uppercase text-sm">
-              Select your choice
-            </p>
+           
           </div>
 
           <div class="items-grid" @touchstart="handleTouchStart" @touchmove="handleTouchMove"
@@ -46,7 +41,7 @@
                 @click="selectItem(currentCategory.title, item)">
                 <span class="item-text">{{ item }}</span>
                 <div v-if="selected[currentCategory.title] === item" class="gold-check">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="4">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="5">
                     <path d="M6 12L10 16L18 8" />
                   </svg>
                 </div>
@@ -54,7 +49,7 @@
             </template>
           </div>
 
-          <!-- Navigation Buttons - Glassmorphism -->
+          <!-- Navigation Buttons -->
           <div class="flex flex-col sm:flex-row gap-5 justify-center mt-12 px-4">
             <button v-if="step > 0" @click="prevStep" class="glass-btn">Back</button>
             <button v-if="step < categories.length - 1" @click="nextStep" :disabled="!selected[currentCategory.title]"
@@ -68,45 +63,34 @@
         </div>
 
         <!-- Thaal Quantity Step -->
-        <!-- Thaal Quantity Step – Fully Responsive -->
-<div v-if="step === categories.length" class="royal-card fade-in mt-10">
-  <h2 class="font-playfair text-4xl sm:text-5xl md:text-7xl font-black text-center mb-6 text-black leading-tight">
-    Number of Thaals
-  </h2>
-  <p class="text-center text-gray-700 text-base sm:text-lg md:text-xl font-light mb-8 px-4">
-    Select how many Thaals you desire
-  </p>
+        <div v-if="step === categories.length" class="royal-card fade-in mt-10">
+          <h2
+            class="font-playfair text-4xl sm:text-5xl md:text-7xl font-black text-center mb-6 text-amber-900 leading-tight">
+            Number of Thaals
+          </h2>
+          <p class="text-center text-amber-800 text-base sm:text-lg md:text-xl font-medium mb-8 px-4">
+            How many royal thaals shall we prepare?
+          </p>
 
-  <!-- Quantity Selector – Super Responsive -->
-  <div class="flex items-center justify-center gap-4 sm:gap-8 my-10 px-4">
-    <button 
-      @click="changeQuantity(-1)" 
-      class="glass-btn quantity-btn text-3xl sm:text-4xl md:text-5xl px-6 sm:px-8 py-4 sm:py-5">
-      −
-    </button>
+          <div class="flex items-center justify-center gap-6 sm:gap-10 my-12 px-4">
+            <button @click="changeQuantity(-1)" class="glass-btn quantity-btn text-4xl sm:text-5xl md:text-6xl">
+              −
+            </button>
+            <div class="text-7xl sm:text-8xl md:text-9xl font-black text-amber-900 tabular-nums tracking-tight">
+              {{ thaalQuantity }}
+            </div>
+            <button @click="changeQuantity(1)" class="glass-btn quantity-btn text-4xl sm:text-5xl md:text-6xl">
+              +
+            </button>
+          </div>
 
-    <div class="text-6xl sm:text-7xl md:text-8xl font-black text-black tabular-nums tracking-tight">
-      {{ thaalQuantity }}
-    </div>
-
-    <button 
-      @click="changeQuantity(1)" 
-      class="glass-btn quantity-btn text-3xl sm:text-4xl md:text-5xl px-6 sm:px-8 py-4 sm:py-5">
-      +
-    </button>
-  </div>
-
-  <!-- Action Buttons – Responsive Layout & Size -->
-  <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center mt-10 px-6 sm:px-4">
-    <button @click="step--" class="glass-btn text-base sm:text-lg px-10 sm:px-12 py-4 sm:py-5">
-      Back
-    </button>
-    <button @click="openSummary"
-      class="glass-btn glass-btn-primary text-lg sm:text-xl px-12 sm:px-16 py-5 sm:py-6 font-bold shadow-2xl">
-      Complete
-    </button>
-  </div>
-</div>
+          <div class="flex flex-col sm:flex-row gap-5 justify-center mt-12 px-4">
+            <button @click="step--" class="glass-btn text-lg px-12 py-5">Back</button>
+            <button @click="openSummary" class="glass-btn glass-btn-primary text-xl px-16 py-6 font-bold shadow-2xl">
+              Complete Order
+            </button>
+          </div>
+        </div>
 
         <!-- Desktop Preview -->
         <div class="thaal-section-desktop hidden md:block mt-16">
@@ -114,52 +98,72 @@
             <img src="/thaal.jpg" alt="Golden Thaal" class="thaal-img" />
             <img src="/download.png" class="center-logo" alt="Logo" />
             <img v-for="(cat, idx) in chosenCats" :key="cat" class="preview-item" :src="categoryImages[cat]"
-              :style="getPreviewPositionStyle('desktop', idx)" @click="showToast(selected[cat])" :alt="selected[cat]" />
+              :style="getPreviewPositionStyle('desktop', idx)" @click="showToast(selected[cat])" />
           </div>
         </div>
       </div>
 
       <!-- Toast -->
       <div
-        class="toast fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-8 py-4 rounded-full bg-black text-white font-bold shadow-2xl text-base border-2 border-black"
+        class="toast fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-8 py-4 rounded-full bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold shadow-2xl text-base border-4 border-amber-400"
         :class="{ 'show': toastMsg }">
         <span>{{ toastMsg }}</span>
       </div>
 
       <!-- Summary Modal -->
-      <div v-if="showSummary"
-        class="fixed inset-0 bg-black/90 flex justify-center z-50 p-4 pt-10 overflow-y-auto backdrop-blur-xl"
-        @click.self="closeModal">
-        <div
-          class="royal-modal animate-scaleIn w-full max-w-md bg-white/95 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border-4 border-black/30"
-          style="max-height: 90vh; overflow-y: auto;">
-          <h2 class="text-5xl md:text-6xl font-playfair font-black text-black text-center mb-10 leading-none">
-            Your Thaal is Ready
-          </h2>
-          <div class="space-y-5">
-            <div class="bg-black/10 rounded-2xl p-6 border border-black/20">
-              <div class="font-black text-black text-2xl">Thaal Quantity</div>
-              <div class="text-3xl mt-2 font-bold">{{ thaalQuantity }}</div>
-            </div>
-            <div v-for="(val, cat) in selected" :key="cat" class="bg-black/5 rounded-2xl p-6 border border-black/20">
-              <div class="font-black text-black text-xl">{{ cat }}</div>
-              <div class="text-lg mt-2 text-gray-800 font-medium">{{ val }}</div>
-            </div>
-          </div>
-          <div class="flex flex-col sm:flex-row gap-5 mt-12">
-            <button @click="sendToWhatsApp" class="glass-btn glass-btn-primary flex-1 text-xl py-6 font-bold">
-              Send to WhatsApp
-            </button>
-            <button @click="closeModal" class="glass-btn flex-1 opacity-80 text-xl py-6">Close</button>
-          </div>
+<!-- SUMMARY MODAL – FIXED & BEAUTIFUL -->
+<div v-if="showSummary" 
+     class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
+     @click.self="closeModal">
+  
+  <div class="w-full max-w-md max-h-[92vh] overflow-y-auto bg-white rounded-3xl shadow-2xl border-4 border-amber-600
+              scrollbar-thin scrollbar-thumb-amber-600 scrollbar-track-amber-50">
+    
+    <!-- Modal Content Container -->
+    <div class="p-6 sm:p-8 min-h-full flex flex-col">
+      
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <h2 class="text-4xl sm:text-5xl font-playfair font-black text-amber-900 leading-tight">
+          Your Royal Thaal is Ready!
+        </h2>
+        <div class="mt-4 w-24 h-1 bg-amber-600 mx-auto rounded-full"></div>
+      </div>
+
+      <!-- Thaal Quantity Card -->
+      <div class="bg-amber-100 rounded-2xl p-6 text-center border-2 border-amber-600 shadow-inner mb-6">
+        <p class="text-amber-900 font-medium uppercase tracking-wider text-sm">Thaal Quantity</p>
+        <div class="text-6xl font-black text-amber-800 mt-2">{{ thaalQuantity }}</div>
+      </div>
+
+      <!-- Selected Items -->
+      <div class="space-y-4 flex-1">
+        <div v-for="(val, cat) in selected" :key="cat"
+             class="bg-amber-50 rounded-2xl p-5 border border-amber-400 shadow-sm">
+          <div class="font-bold text-amber-900 text-lg">{{ cat }}</div>
+          <div class="text-amber-800 font-medium mt-1">{{ val }}</div>
         </div>
       </div>
+
+      <!-- Action Buttons – Sticky at bottom -->
+      <div class="flex flex-col sm:flex-row gap-4 mt-8 pt-4 border-t border-amber-200">
+        <button @click="sendToWhatsApp"
+                class="flex-1 py-5 bg-amber-700 hover:bg-amber-800 text-white font-bold text-lg rounded-full border-4 border-amber-600 shadow-xl transition transform hover:scale-105">
+          Send to WhatsApp
+        </button>
+        <button @click="closeModal"
+                class="flex-1 py-5 bg-white hover:bg-amber-50 text-amber-900 font-bold text-lg rounded-full border-4 border-amber-600 shadow-lg transition">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
     </div>
   </div>
 </template>
 
 <script>
-  // Your full script remains unchanged — only styles updated
   import html2canvas from "html2canvas";
   import confetti from "canvas-confetti";
   import SplashScreen from "./SplashScreen.vue";
@@ -169,7 +173,8 @@
     data() {
       return {
         thaalQuantity: 1,
-        started: false, step: 0, selected: {}, fadeClass: "fade-in", showSummary: false, toastMsg: "", isTransitioning: false, touchStartX: 0,
+        started: false, step: 0, selected: {}, fadeClass: "fade-in", showSummary: false, toastMsg: "", isTransitioning: false,
+        touchStartX: 0, touchStartY: 0,
         categories: [
           {
             title: "Mithaas",
@@ -237,7 +242,11 @@
               { name: "Drinks", items: ["Chai Live", "Coffee", "Kahwa", "Sharbat"] }
             ]
           }
-        ], categoryImages: { Mithaas: "/icecream.jpg", Kharaas: "/kharaas.jpg", Tarkari: "/tarkaari.jpg", Roti: "/roti.jpeg", Biryani: "/biryani.jpeg", Soups: "/soup.jpg", Salads: "/salad.jpeg", "Mouth Fresheners": "/paan.jpg" }
+        ], categoryImages: {
+          Mithaas: "/icecream.jpg", Kharaas: "/kharaas.jpg", Tarkari: "/tarkaari.jpg",
+          Roti: "/roti.jpeg", Biryani: "/biryani.jpeg", Soups: "/soup.jpg",
+          Salads: "/salad.jpeg", "Mouth Fresheners": "/paan.jpg"
+        }
       };
     },
     computed: {
@@ -245,10 +254,8 @@
       chosenCats() { return Object.keys(this.selected); },
       rootBg() {
         return {
-          background: '#ffffff',
           fontFamily: "'Playfair Display', 'Inter', serif",
           minHeight: '100vh',
-          color: '#000000'
         };
       }
     },
@@ -280,7 +287,7 @@
           return {
             width: '64px',
             height: '64px',
-            left: '50%',
+            left: '80%',
             top: '50%',
             transform: 'translate(-50%, -50%)',
             border: '6px solid white'
@@ -291,10 +298,10 @@
         const center = 130;
 
         return {
-          width: '52px',
-          height: '52px',
-          left: `${center + Math.cos(angle) * radius - 26}px`,
-          top: `${center + Math.sin(angle) * radius - 26}px`
+          width: '56px',
+          height: '56px',
+          left: `${center + Math.cos(angle) * radius - 15}px`,
+          top: `${center + Math.sin(angle) * radius - 20}px`
         };
       },
 
@@ -453,32 +460,32 @@
 
 
       handleTouchStart(e) {
-  this.touchStartX = e.touches[0].clientX;
-  this.touchStartY = e.touches[0].clientY; // ← add this
-},
+        this.touchStartX = e.touches[0].clientX;
+        this.touchStartY = e.touches[0].clientY; // ← add this
+      },
 
       handleTouchMove(e) {
-  if (!this.touchStartX || !this.touchStartY) return;
+        if (!this.touchStartX || !this.touchStartY) return;
 
-  const touch = e.touches[0];
-  const diffX = this.touchStartX - touch.clientX;
-  const diffY = this.touchStartY - touch.clientY;
+        const touch = e.touches[0];
+        const diffX = this.touchStartX - touch.clientX;
+        const diffY = this.touchStartY - touch.clientY;
 
-  if (Math.abs(diffY) > Math.abs(diffX)) return; // ← ignore mostly vertical movement
+        if (Math.abs(diffY) > Math.abs(diffX)) return; // ← ignore mostly vertical movement
 
-  if (Math.abs(diffX) > 50) {
-    if (diffX > 0 && this.step < this.categories.length - 1) this.nextStep();
-    else if (diffX < 0 && this.step > 0) this.prevStep();
-    this.touchStartX = 0;
-    this.touchStartY = 0; // ← reset
-  }
-},
+        if (Math.abs(diffX) > 50) {
+          if (diffX > 0 && this.step < this.categories.length - 1) this.nextStep();
+          else if (diffX < 0 && this.step > 0) this.prevStep();
+          this.touchStartX = 0;
+          this.touchStartY = 0; // ← reset
+        }
+      },
 
 
-handleTouchEnd() {
-  this.touchStartX = 0;
-  this.touchStartY = 0; // ← reset
-},
+      handleTouchEnd() {
+        this.touchStartX = 0;
+        this.touchStartY = 0; // ← reset
+      },
 
       sendToWhatsApp() {
         const number = "923032614853";
@@ -507,86 +514,10 @@ handleTouchEnd() {
         };
       })()
     }
-
   };
 </script>
 
 <style scoped>
-  /* Glassmorphism Buttons - Ultra Premium */
-  .glass-btn {
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1.5px solid rgba(0, 0, 0, 0.2);
-    color: #000;
-    font-weight: 800;
-    font-size: 1.1rem;
-    padding: 14px 32px;
-    border-radius: 20px;
-    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-    box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.15),
-      inset 0 2px 8px rgba(255, 255, 255, 0.4);
-    letter-spacing: 0.5px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .glass-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.05) 100%);
-    opacity: 0;
-    transition: opacity 0.4s;
-  }
-
-  .glass-btn:hover:not(:disabled)::before {
-    opacity: 1;
-  }
-
-  .glass-btn:hover:not(:disabled) {
-    transform: translateY(-6px);
-    background: rgba(255, 255, 255, 0.4);
-    border-color: rgba(0, 0, 0, 0.4);
-    box-shadow:
-      0 20px 50px rgba(0, 0, 0, 0.25),
-      inset 0 2px 12px rgba(255, 255, 255, 0.6);
-  }
-
-  .glass-btn:active {
-    transform: translateY(-2px);
-  }
-
-  /* Primary Action Button (Complete, Finish, WhatsApp) */
-  .glass-btn-primary {
-    background: rgba(0, 0, 0, 0.85);
-    color: white;
-    border: 1.5px solid rgba(0, 0, 0, 0.6);
-    box-shadow:
-      0 10px 40px rgba(0, 0, 0, 0.3),
-      inset 0 2px 10px rgba(255, 255, 255, 0.2);
-  }
-
-  .glass-btn-primary:hover:not(:disabled) {
-    background: rgba(0, 0, 0, 0.95);
-    border-color: black;
-    box-shadow:
-      0 25px 60px rgba(0, 0, 0, 0.4),
-      inset 0 3px 15px rgba(255, 255, 255, 0.3);
-    transform: translateY(-8px);
-  }
-
-  .glass-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    transform: none !important;
-  }
-
-  /* Rest of your styles (cards, preview, etc.) */
   .main-container {
     display: flex;
     flex-direction: column;
@@ -623,8 +554,8 @@ handleTouchEnd() {
     position: relative;
     border-radius: 50%;
     overflow: hidden;
-    border: 0px solid transparent;
     box-shadow: 0 50px 120px rgba(0, 0, 0, 0.25);
+    border: 12px solid #D4AF37;
   }
 
   .preview-wrapper-mobile {
@@ -634,43 +565,43 @@ handleTouchEnd() {
     position: relative;
     border-radius: 50%;
     overflow: hidden;
-    border: 12px solid transparent;
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
     background: white;
+    /* border: 2px solid #D4AF37; */
   }
 
   .preview-item,
   .preview-item-mobile {
     position: absolute;
     border-radius: 50%;
-    border: 3px solid rgb(155, 155, 155);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    border: 4px solid #D4AF37;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
     object-fit: cover;
     transition: all 0.4s ease;
   }
 
   .preview-item:hover,
   .preview-item-mobile:hover {
-    transform: scale(1.35);
-    border-color: black;
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+    transform: scale(1.4);
+    border-color: #8B1E3F;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
     z-index: 50;
   }
 
   .royal-card {
-    background: rgba(255, 255, 255, 0.96);
+    background: rgba(255, 255, 255, 0.94);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(0, 0, 0, 0.15);
+    border: 2px solid #D4AF37;
     border-radius: 36px;
     padding: 48px 32px;
-    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 30px 100px rgba(139, 30, 63, 0.15);
   }
 
   .group-header {
     grid-column: 1 / -1;
     margin: 40px 0 20px;
     padding: 16px 24px;
-    background: black;
+    background: #8B1E3F;
     color: white;
     font-size: 16px;
     font-weight: 900;
@@ -681,14 +612,14 @@ handleTouchEnd() {
   }
 
   .royal-item-card {
-    background: rgba(0, 0, 0, 0.06);
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid #D4AF37;
     border-radius: 24px;
     padding: 24px 18px;
     text-align: center;
     font-weight: 600;
     font-size: 15px;
-    color: black;
+    color: #5D4037;
     cursor: pointer;
     transition: all 0.4s ease;
     backdrop-filter: blur(10px);
@@ -697,16 +628,16 @@ handleTouchEnd() {
 
   .royal-item-card:hover {
     transform: translateY(-10px);
-    background: rgba(0, 0, 0, 0.12);
-    border-color: black;
+    background: rgba(255, 255, 255, 0.95);
+    border-color: #8B1E3F;
   }
 
   .royal-item-card.selected {
-    background: black;
+    background: linear-gradient(135deg, #8B1E3F, #A52A2A);
     color: white;
     transform: scale(1.07);
-    border-color: black;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+    border-color: #D4AF37;
+    box-shadow: 0 0 50px rgba(139, 30, 63, 0.5);
   }
 
   .gold-check {
@@ -715,7 +646,7 @@ handleTouchEnd() {
     right: 12px;
     width: 36px;
     height: 36px;
-    background: black;
+    background: #D4AF37;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -731,31 +662,130 @@ handleTouchEnd() {
     transform: translate(-50%, -50%);
     object-fit: contain;
     z-index: 30;
-    border-radius: 50%;
-    border: 12px solid transparent;
-    opacity: 0.92;
+    border-radius: 100%;
+    border: 2px solid rgba(212, 175, 55, 0.8);
+    opacity: 0.95;
   }
 
   .center-logo {
-    width: 38%;
+    width: 20%;
     height: 38%;
   }
 
   .center-logo-mobile {
-    width: 42%;
-    height: 42%;
+    width: 30%;
+    height: 30%;
   }
 
+  .glass-btn {
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(16px);
+    border: 2px solid #D4AF37;
+    color: #5D4037;
+    font-weight: 800;
+    font-size: 1.1rem;
+    padding: 14px 32px;
+    border-radius: 20px;
+    transition: all 0.4s;
+    box-shadow: 0 8px 32px rgba(139, 30, 63, 0.15);
+  }
+
+  .glass-btn:hover:not(:disabled) {
+    transform: translateY(-6px);
+    background: rgba(255, 255, 255, 0.5);
+    border-color: #8B1E3F;
+    box-shadow: 0 20px 50px rgba(139, 30, 63, 0.25);
+  }
+
+  .glass-btn-primary {
+    background: linear-gradient(135deg, #8B1E3F, #A52A2A);
+    color: white;
+    border: 2px solid #D4AF37;
+    box-shadow: 0 10px 40px rgba(139, 30, 63, 0.4);
+  }
+
+  .glass-btn-primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, #A52A2A, #8B1E3F);
+    transform: translateY(-8px);
+    box-shadow: 0 25px 60px rgba(139, 30, 63, 0.5);
+  }
+
+  .quantity-btn {
+    min-width: 60px;
+    min-height: 60px;
+    border-radius: 50%;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border: 4px solid #D4AF37;
+    font-weight: 300;
+  }
+
+  @media (max-width: 480px) {
+    .quantity-btn {
+      min-width: 50px;
+      min-height: 50px;
+    }
+  }
+
+ /* TOAST – Full Width, Royal Gold, Beautiful Animation */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%) translateY(100px);
+  opacity: 0;
+  z-index: 9999;
+  width: 92%;
+  max-width: 420px;
+  padding: 18px 24px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, #8B1E3F 0%, #A52A2A 100%);
+  color: white;
+  font-weight: 800;
+  font-size: 1.1rem;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(139, 30, 63, 0.4);
+  border: 3px solid #D4AF37;
+  backdrop-filter: blur(12px);
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* Optional: Add a golden shine sweep effect */
+.toast::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transform: skewX(-25deg);
+  transition: none;
+  animation: shine 2s infinite;
+}
+
+@keyframes shine {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Mobile fine-tuning */
+@media (max-width: 480px) {
   .toast {
-    transform: translateY(100px);
-    opacity: 0;
-    transition: all 0.6s ease;
+    bottom: 16px;
+    width: 94%;
+    font-size: 1rem;
+    padding: 16px 20px;
   }
-
-  .toast.show {
-    transform: translateY(0);
-    opacity: 1;
-  }
+}
 
   @keyframes scaleIn {
     from {
@@ -773,24 +803,13 @@ handleTouchEnd() {
     animation: scaleIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
-  /* Responsive Quantity Buttons – Extra Polish */
-.quantity-btn {
-  min-width: 56px;
-  min-height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  padding: 0 !important;
-  aspect-ratio: 1;
-  font-weight: 300;
-}
-
-@media (max-width: 480px) {
-  .quantity-btn {
-    min-width: 50px;
-    min-height: 50px;
-    font-size: 2.2rem !important;
+  .fade-in {
+    opacity: 1;
+    transition: opacity 0.5s;
   }
-}
+
+  .fade-out {
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
 </style>
