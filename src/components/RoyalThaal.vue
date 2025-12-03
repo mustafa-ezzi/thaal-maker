@@ -405,33 +405,37 @@
   },
 
   scrollToTop() {
-  const scrollArea = document.querySelector(".fixed.inset-0") || window;
+  const container = this.$el.querySelector('.fixed.inset-0');
 
-  scrollArea.scrollTo({
-    top: 210,
-    behavior: "smooth"
-  });
+  if (container) {
+    container.scrollTo({
+      top: 210,
+      behavior: "smooth"
+    });
+  }
 },
+
 
   handleTouchStart(e) {
     this.touchStartX = e.touches[0].clientX;
   },
 
   handleTouchMove(e) {
-    if (!this.touchStartX) return;
+  if (!this.touchStartX) return;
 
-    const diff = this.touchStartX - e.touches[0].clientX;
+  const touch = e.touches[0];
+  const diffX = this.touchStartX - touch.clientX;
+  const diffY = Math.abs(this.touchStartY - touch.clientY);
 
-    if (Math.abs(diff) > 50) {
-      if (diff > 0 && this.step < this.categories.length - 1) {
-        this.nextStep();
-      } else if (diff < 0 && this.step > 0) {
-        this.prevStep();
-      }
+  if (diffY > 30) return;
 
-      this.touchStartX = 0;
-    }
-  },
+  if (Math.abs(diffX) > 50) {
+    if (diffX > 0 && this.step < this.categories.length - 1) this.nextStep();
+    else if (diffX < 0 && this.step > 0) this.prevStep();
+    this.touchStartX = 0;
+  }
+},
+
 
   handleTouchEnd() {
     this.touchStartX = 0;
