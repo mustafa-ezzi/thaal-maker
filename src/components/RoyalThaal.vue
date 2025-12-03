@@ -480,7 +480,7 @@
 
         if (container) {
           container.scrollTo({
-            top: 210,
+            top: 0,
             behavior: "smooth"
           });
         }
@@ -516,22 +516,26 @@
       },
 
       sendToWhatsApp() {
-        const number = "923032614853";
+  const number = "923032614853";
 
-        let msg = " *Thaal Order* \n\n";
-        msg += `*Thaal Quantity:* ${this.thaalQuantity}\n\n`;
-        msg += "*Selections:*\n";
+  let msg = " *Shabbir Hussain Catering* \n";
 
-        let idx = 1;
-        for (const cat in this.selected) {
-          msg += `${idx}. *${cat}:* ${this.selected[cat]}\n`;
-          idx++;
-        }
+  msg += `*Thaal Quantity:* ${this.thaalQuantity}\n\n`;
+  msg += "*Selections:*\n";
+  msg += "*Please provide a quote for this menu:*\n";
 
+  let idx = 1;
+  for (const cat in this.selected) {
+    msg += `${idx}. *${cat}:* ${this.selected[cat]}\n`;
+    idx++;
+  }
 
-        const url = `https://wa.me/${number}?text=${encodeURIComponent(msg)}`;
-        window.open(url, "_blank");
-      },
+  msg += `\n🔗 *Website:* https://shabbirhussaincatering.com`;
+
+  const url = `https://wa.me/${number}?text=${encodeURIComponent(msg)}`;
+  window.open(url, "_blank");
+},
+
 
 
       debouncedUpdatePreview: (() => {

@@ -3,19 +3,51 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thaal</title>
 
-  <!-- Tailwind CSS via CDN -->
+  <title>Shabbir Hussain Catering</title>
+  <meta name="description" content="Premium catering with elegance, flavor, and unforgettable presentation. Powered by Shabbir Hussain Catering.">
+  <meta name="theme-color" content="#7a0c0c">
+
+  <!-- Favicon / Logo -->
+  <link rel="icon" type="image/png" href="/public/download.png" />
+
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    integrity="sha512-XXXXXX" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Almarai:wght@400;700;800&family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Almarai:wght@400;700;800&family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Almarai', sans-serif;
+    }
+  </style>
 </head>
 
 <body class="bg-red-50">
+
+  <!-- Header / Logo -->
+  <header class="w-full py-6 bg-white shadow-md">
+    <div class="max-w-6xl mx-auto flex items-center gap-4 px-4">
+      <img src="./public/download.png" alt="Shabbir Hussain Catering Logo"
+        class="w-14 h-14 object-contain" />
+
+      <h1 class="text-2xl md:text-3xl font-bold text-red-900 tracking-wide"
+        style="font-family: 'Cinzel', serif;">
+        Shabbir Hussain Catering
+      </h1>
+    </div>
+  </header>
+
+  <!-- Vue App Mount -->
   <div id="app"></div>
+
   <script type="module" src="/src/main.js"></script>
 </body>
 
