@@ -1,57 +1,110 @@
 <!-- src/components/SplashScreen.vue -->
 <template>
   <div
-    class="fixed inset-0 flex flex-col items-center justify-center overflow-hidden bg-white p-6"
+    class="fixed inset-0 flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100"
     role="region"
     aria-label="Welcome to Royal Thaal"
   >
-    <!-- Animated Background Particles (subtle luxury) -->
-    <div class="absolute inset-0 opacity-20">
-      <div class="absolute top-10 left-10 w-72 h-72 bg-yellow-400 rounded-full mix-blend-screen filter blur-3xl animate-pulse"></div>
-      <div class="absolute bottom-20 right-12 w-96 h-96 bg-orange-600 rounded-full mix-blend-screen filter blur-3xl animate-pulse delay-1000"></div>
+    <!-- Sophisticated Animated Background Orbs -->
+    <div class="absolute inset-0 opacity-[0.15] pointer-events-none overflow-hidden">
+      <div class="absolute -top-20 -left-20 w-[600px] h-[600px] bg-gradient-to-br from-black to-gray-800 rounded-full mix-blend-multiply blur-3xl animate-blob"></div>
+      <div class="absolute -bottom-20 -right-20 w-[500px] h-[500px] bg-gradient-to-br from-gray-900 to-black rounded-full mix-blend-multiply blur-3xl animate-blob animation-delay-2000"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-gradient-to-br from-gray-700 to-gray-900 rounded-full mix-blend-multiply blur-3xl animate-blob animation-delay-4000"></div>
     </div>
 
-    <div class="relative z-10 flex flex-col items-center text-center max-w-2xl">
-      <!-- Logo -->
-      <div class="mb-8 animate-float">
-        <img
-          src="/download.png"
-          alt="Royal Thaal Logo"
-          class="w-28 h-28 md:w-40 md:h-40 rounded-full shadow-2xl border-4 border-[#FFD700] p-2 bg-white/10 backdrop-blur-sm"
-          loading="eager"
-        />
+    <!-- Radial gradient overlay for depth -->
+    <div class="absolute inset-0 bg-gradient-radial from-transparent via-white/50 to-white pointer-events-none"></div>
+
+    <div class="relative z-10 flex flex-col items-center text-center w-full px-6 max-w-4xl">
+
+      <!-- Premium Logo with Glow -->
+      <div class="mb-8 md:mb-12 animate-float">
+        <div class="relative">
+          <!-- Glow effect -->
+          <div class="absolute inset-0 bg-gradient-to-br from-black via-gray-800 to-black rounded-[2rem] blur-2xl opacity-40 animate-pulse-glow"></div>
+          <img
+            src="/download.png"
+            alt="Royal Thaal Logo"
+            class="relative w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36 rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.4)] 
+                   border-4 md:border-6 border-white bg-white p-3 backdrop-blur-xl
+                   hover:scale-105 transition-all duration-700"
+            loading="eager"
+          />
+        </div>
       </div>
 
-      <!-- BIG BEAUTIFUL THAAL IMAGE (replaces the text) -->
-      <div class="relative mb-10 animate-scaleIn">
-        <img
-          src="/thaal.jpg"
-          alt="Your Royal Thaal Awaits"
-          class="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover border-8 border-white shadow-3xl 
-                 ring-8 ring-[#FFD700]/30 hover:ring-[#FFD700]/60 transition-all duration-700
-                 animate-pulse-slow"
-        />
-        <!-- Golden glow ring around thaal -->
-        <div class="absolute inset-0 rounded-full bg-gradient-to-t from-[#FFD700]/20 to-transparent blur-3xl"></div>
+      <!-- Hero Thaal Image - Stunning Presentation -->
+      <div class="relative mb-10 md:mb-14 animate-scaleIn">
+        <div class="relative group">
+          <!-- Outer glow ring -->
+          <div class="absolute -inset-6 bg-gradient-to-br from-black via-gray-800 to-black rounded-full blur-3xl opacity-30 group-hover:opacity-50 transition-opacity duration-700 animate-pulse-glow"></div>
+          
+          <!-- Main image -->
+          <div class="relative">
+            <img
+              src="/thaal.jpg"
+              alt="Your Royal Thaal Awaits"
+              class="relative w-80 h-80 sm:w-96 sm:h-96 md:w-[28rem] md:h-[28rem] lg:w-[32rem] lg:h-[32rem] 
+                     rounded-full object-cover border-[10px] md:border-[14px] border-white 
+                     shadow-[0_25px_80px_-15px_rgba(0,0,0,0.5)]
+                     ring-4 md:ring-6 ring-black/20 
+                     transform transition-all duration-700 hover:scale-[1.02] hover:shadow-[0_30px_100px_-15px_rgba(0,0,0,0.6)]"
+            />
+            <div class="absolute inset-8 md:inset-10 rounded-full bg-white/30 blur-3xl"></div>
+          </div>
+        </div>
       </div>
 
-      <!-- Enhanced CTA Button -->
+      <!-- Title & Tagline - Refined Typography -->
+      <div class="space-y-3 md:space-y-5 mb-10 md:mb-12 opacity-0 animate-fadeInUp animation-delay-800">
+      
+        
+        <div class="h-[2px] w-32 md:w-40 mx-auto bg-gradient-to-r from-transparent via-black to-transparent"></div>
+       
+      </div>
+
+      <!-- Premium Glassmorphism CTA Button -->
       <button
         @click="$emit('start')"
         @keydown.enter.prevent="$emit('start')"
         @keydown.space.prevent="$emit('start')"
-        class="group relative mt-12 px-10 py-5 text-xl md:text-2xl font-bold text-black bg-gradient-to-r from-[#FFD700] via-[#FFBE0B] to-[#FB8C00] 
-               rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-500 
-               overflow-hidden border-4 border-[#B8860B] opacity-0 animate-fadeInUp animation-delay-1000
-               focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:ring-opacity-60"
+        class="group relative px-10 py-5 md:px-14 md:py-7 text-xl md:text-2xl lg:text-3xl font-black tracking-wider text-white
+               bg-gradient-to-br from-black via-gray-900 to-black
+               backdrop-blur-xl border-2 border-white/20
+               rounded-full shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)]
+               hover:shadow-[0_25px_80px_-15px_rgba(0,0,0,0.7)]
+               transform hover:scale-110 active:scale-105
+               transition-all duration-500 overflow-hidden
+               focus:outline-none focus:ring-4 focus:ring-black/30
+               opacity-0 animate-fadeInUp animation-delay-1200"
         aria-label="Start building your Royal Thaal"
       >
-        <span class="relative z-10 flex items-center gap-3">
+        <!-- Animated gradient overlay -->
+        <div class="absolute inset-0 bg-gradient-to-r from-gray-900 via-black to-gray-900 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        
+        <span class="relative z-10 flex items-center justify-center gap-3 md:gap-4">
           MAKE MY THAAL
-          
+          <svg 
+            class="w-6 h-6 md:w-7 md:h-7 group-hover:translate-x-2 transition-transform duration-500" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
         </span>
-        <div class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white to-transparent opacity-30 skew-x-12 group-hover:animate-shine"></div>
+
+        <!-- Shine sweep effect -->
+        <div class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 group-hover:animate-shine"></div>
+        
+        <!-- Subtle pulse ring -->
+        <div class="absolute inset-0 rounded-full ring-2 ring-white/0 group-hover:ring-white/20 transition-all duration-500"></div>
       </button>
+
+    
     </div>
   </div>
 </template>
@@ -60,7 +113,7 @@
 export default {
   name: 'SplashScreen',
   mounted() {
-    // Preload images
+    // Preload critical images for instant display
     const images = ['/download.png', '/thaal.jpg'];
     images.forEach(src => {
       const img = new Image();
@@ -71,43 +124,142 @@ export default {
 </script>
 
 <style scoped>
+/* Blob Animation - Organic Movement */
+@keyframes blob {
+  0%, 100% { 
+    transform: translate(0, 0) scale(1) rotate(0deg); 
+  }
+  25% { 
+    transform: translate(30px, -60px) scale(1.1) rotate(5deg); 
+  }
+  50% { 
+    transform: translate(-40px, 30px) scale(0.9) rotate(-5deg); 
+  }
+  75% { 
+    transform: translate(60px, 60px) scale(1.05) rotate(3deg); 
+  }
+}
+
+.animate-blob {
+  animation: blob 20s ease-in-out infinite;
+}
+
+/* Floating Animation - Gentle Hover */
 @keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-20px) rotate(5deg); }
+  0%, 100% { 
+    transform: translateY(0) rotate(0deg); 
+  }
+  50% { 
+    transform: translateY(-20px) rotate(2deg); 
+  }
 }
-.animate-float { animation: float 6s ease-in-out infinite; }
 
+.animate-float {
+  animation: float 8s ease-in-out infinite;
+}
+
+/* Scale In with Bounce */
 @keyframes scaleIn {
-  0% { transform: scale(0.3); opacity: 0; }
-  80% { transform: scale(1.08); }
-  100% { transform: scale(1); opacity: 1; }
+  0% { 
+    transform: scale(0.5); 
+    opacity: 0; 
+  }
+  60% { 
+    transform: scale(1.05); 
+  }
+  80% {
+    transform: scale(0.98);
+  }
+  100% { 
+    transform: scale(1); 
+    opacity: 1; 
+  }
 }
+
 .animate-scaleIn {
-  animation: scaleIn 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: scaleIn 1.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-@keyframes pulse-slow {
-  0%, 100% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.3); }
-  50% { box-shadow: 0 0 60px rgba(255, 215, 0, 0.6); }
-}
-.animate-pulse-slow {
-  animation: pulse-slow 4s ease-in-out infinite;
+/* Pulse Glow - Subtle Breathing Effect */
+@keyframes pulse-glow {
+  0%, 100% { 
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.5;
+    transform: scale(1.05);
+  }
 }
 
+.animate-pulse-glow {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+/* Fade In Up - Smooth Entry */
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { 
+    opacity: 0; 
+    transform: translateY(30px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
 }
-.animate-fadeInUp { animation: fadeInUp 0.9s ease-out forwards; }
 
-.animation-delay-700 { animation-delay: 0.7s; }
-.animation-delay-1000 { animation-delay: 1s; }
+.animate-fadeInUp {
+  animation: fadeInUp 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
 
+/* Shine Sweep - Premium Effect */
 @keyframes shine {
-  0% { transform: translateX(-100%) skewX(-15deg); }
-  100% { transform: translateX(300%) skewX(-15deg); }
+  0% { 
+    transform: translateX(-200%) skewX(-15deg); 
+  }
+  100% { 
+    transform: translateX(200%) skewX(-15deg); 
+  }
 }
-.group-hover\\:animate-shine:hover {
-  animation: shine 1.5s ease-in-out;
+
+.group-hover\:animate-shine {
+  animation: shine 1.5s ease-out;
+}
+
+/* Animation Delays */
+.animation-delay-800 { 
+  animation-delay: 0.8s; 
+}
+
+.animation-delay-1200 { 
+  animation-delay: 1.2s; 
+}
+
+.animation-delay-1600 { 
+  animation-delay: 1.6s; 
+}
+
+.animation-delay-2000 { 
+  animation-delay: 2s; 
+}
+
+.animation-delay-4000 { 
+  animation-delay: 4s; 
+}
+
+/* Radial Gradient Utility */
+.bg-gradient-radial {
+  background-image: radial-gradient(circle at center, var(--tw-gradient-stops));
+}
+
+/* Remove tap highlight on mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Smooth font rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 </style>
