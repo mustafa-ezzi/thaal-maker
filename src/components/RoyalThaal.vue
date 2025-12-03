@@ -59,10 +59,6 @@
           <!-- Navigation Buttons -->
           <div class="flex flex-col sm:flex-row gap-5 justify-center mt-12 px-4">
             <button v-if="step > 0" @click="prevStep" class="glass-btn">Back</button>
-            <button v-if="step < categories.length - 1" @click="nextStep" :disabled="!selected[currentCategory.title]"
-              class="glass-btn">
-              Next
-            </button>
             <button v-else @click="finishThaal" class="glass-btn glass-btn-primary text-xl px-14 py-5 font-bold">
               Finish Thaal
             </button>
@@ -667,7 +663,7 @@
 
   .group-header {
     grid-column: 1 / -1;
-    margin: 40px 0 20px;
+    margin: 7px 0 7px;
     padding: 16px 24px;
     background: #8B1E3F;
     color: white;
