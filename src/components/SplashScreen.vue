@@ -26,7 +26,7 @@
           <!-- Logo Perfectly Centered on Thaal -->
           <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
             <div class="relative ">
-              <div class="w-20 h-20 sm:w-30 sm:h-30 md:w-38 md:h-38 
+              <div class="w-32 h-32 sm:w-30 sm:h-30 md:w-38 md:h-38 
                      bg-white rounded-full shadow-2xl  p-4
                      flex items-center justify-center">
                 <img src="/download.png" alt="Royal Thaal Logo" class="w-full rounded-full h-full object-contain" />

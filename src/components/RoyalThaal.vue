@@ -62,35 +62,56 @@
           </div>
         </div>
 
-        <!-- Thaal Quantity Step -->
-        <div v-if="step === categories.length" class="royal-card fade-in mt-10">
-          <h2
-            class="font-playfair text-4xl sm:text-5xl md:text-7xl font-black text-center mb-6 text-amber-900 leading-tight">
-            Number of Thaals
-          </h2>
-          <p class="text-center text-amber-800 text-base sm:text-lg md:text-xl font-medium mb-8 px-4">
-            How many royal thaals shall we prepare?
-          </p>
+<!-- QUANTITY STEP – RESPONSIVE & ROYAL -->
+<div v-if="step === categories.length" class="royal-card fade-in mt-8 md:mt-12">
+  <h2 class="font-playfair text-4xl sm:text-5xl md:text-7xl font-black text-center mb-5 md:mb-6 text-amber-900 leading-tight">
+    Number of Thaals
+  </h2>
+  <div class="flex items-center justify-center gap-4 sm:gap-6 md:gap-8 max-w-lg mx-auto px-4 sm:px-6">
+    
 
-          <div class="flex items-center justify-center gap-6 sm:gap-10 my-12 px-4">
-            <button @click="changeQuantity(-1)" class="glass-btn quantity-btn text-4xl sm:text-5xl md:text-6xl">
-              −
-            </button>
-            <div class="text-7xl sm:text-8xl md:text-9xl font-black text-amber-900 tabular-nums tracking-tight">
-              {{ thaalQuantity }}
-            </div>
-            <button @click="changeQuantity(1)" class="glass-btn quantity-btn text-4xl sm:text-5xl md:text-6xl">
-              +
-            </button>
-          </div>
+    <!-- Royal Input Field -->
+    <div class="relative mx-2 sm:mx-4">
+      <input 
+        type="text" 
+        v-model.number="thaalQuantity" 
+        @input="sanitizeQuantity"
+        @focus="$event.target.select()"
+        class="thaal-input text-6xl sm:text-7xl md:text-9xl font-black text-amber-900 text-center 
+               bg-transparent border-b-6 sm:border-b-8 border-amber-600 
+               outline-none 
+               w-32 sm:w-40 md:w-56 
+               tabular-nums tracking-tight
+               placeholder-amber-500/40"
+        placeholder="0"
+        inputmode="numeric"
+      />
+      <hr/>
+      <!-- Golden glow underline -->
+      <div class="absolute bottom-0 left-0 right-0 h-1.5 sm:h-2 bg-gradient-to-r from-transparent via-amber-400 to-transparent blur-md opacity-70"></div>
+    </div>
 
-          <div class="flex flex-col sm:flex-row gap-5 justify-center mt-12 px-4">
-            <button @click="step--" class="glass-btn text-lg px-12 py-5">Back</button>
-            <button @click="openSummary" class="glass-btn glass-btn-primary text-xl px-16 py-6 font-bold shadow-2xl">
-              Complete Order
-            </button>
-          </div>
-        </div>
+    <!-- Plus Button -->
+
+  </div>
+
+  <!-- Navigation Buttons -->
+  <div class="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center mt-12 md:mt-16 px-4">
+     <button @click="openSummary" 
+            class="glass-btn glass-btn-primary text-lg sm:text-xl md:text-2xl 
+                   px-12 sm:px-16 py-5 sm:py-6 font-bold shadow-2xl 
+                   hover:shadow-amber-600/40 transform hover:scale-105 
+                   active:scale-95 transition-all duration-300">
+      Complete Order
+    </button>
+    <button @click="step--" 
+            class="glass-btn text-base sm:text-lg px-10 sm:px-12 py-4 sm:py-5 
+                   hover:shadow-xl transition-all">
+      Back
+    </button>
+   
+  </div>
+</div>
 
         <!-- Desktop Preview -->
         <div class="thaal-section-desktop hidden md:block mt-16">
@@ -262,6 +283,13 @@
     mounted() { this.updatePreview(); window.addEventListener("resize", this.debouncedUpdatePreview); },
     beforeUnmount() { window.removeEventListener("resize", this.debouncedUpdatePreview); },
     methods: {
+
+      sanitizeQuantity(e) {
+  let val = e.target.value.replace(/[^0-9]/g, ''); // Only numbers
+  val = val === '' ? 1 : parseInt(val);
+  val = Math.max(0, Math.min(100, val)); // Clamp between 1 and 30
+  this.thaalQuantity = val;
+},
 
       changeQuantity(val) {
         const newQty = this.thaalQuantity + val;
@@ -777,6 +805,10 @@
   100% { left: 100%; }
 }
 
+hr{
+  background:red
+  
+}
 /* Mobile fine-tuning */
 @media (max-width: 480px) {
   .toast {
@@ -786,6 +818,7 @@
     padding: 16px 20px;
   }
 }
+
 
   @keyframes scaleIn {
     from {
@@ -812,4 +845,24 @@
     opacity: 0;
     transition: opacity 0.3s;
   }
+
+  /* Make input look even more royal */
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* Pulse animation when focused */
+input:focus + .blur-md {
+  animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; transform: scaleX(1.05); }
+}
 </style>
