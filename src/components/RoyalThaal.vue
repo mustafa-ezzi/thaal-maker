@@ -453,34 +453,37 @@
 
 
       handleTouchStart(e) {
-        this.touchStartX = e.touches[0].clientX;
-      },
+  this.touchStartX = e.touches[0].clientX;
+  this.touchStartY = e.touches[0].clientY; // ← add this
+},
 
       handleTouchMove(e) {
-        if (!this.touchStartX) return;
+  if (!this.touchStartX || !this.touchStartY) return;
 
-        const touch = e.touches[0];
-        const diffX = this.touchStartX - touch.clientX;
-        const diffY = Math.abs(this.touchStartY - touch.clientY);
+  const touch = e.touches[0];
+  const diffX = this.touchStartX - touch.clientX;
+  const diffY = this.touchStartY - touch.clientY;
 
-        if (diffY > 30) return;
+  if (Math.abs(diffY) > Math.abs(diffX)) return; // ← ignore mostly vertical movement
 
-        if (Math.abs(diffX) > 50) {
-          if (diffX > 0 && this.step < this.categories.length - 1) this.nextStep();
-          else if (diffX < 0 && this.step > 0) this.prevStep();
-          this.touchStartX = 0;
-        }
-      },
+  if (Math.abs(diffX) > 50) {
+    if (diffX > 0 && this.step < this.categories.length - 1) this.nextStep();
+    else if (diffX < 0 && this.step > 0) this.prevStep();
+    this.touchStartX = 0;
+    this.touchStartY = 0; // ← reset
+  }
+},
 
 
-      handleTouchEnd() {
-        this.touchStartX = 0;
-      },
+handleTouchEnd() {
+  this.touchStartX = 0;
+  this.touchStartY = 0; // ← reset
+},
 
       sendToWhatsApp() {
         const number = "923032614853";
 
-        let msg = "👑 *Royal Thaal — Premium Order* 👑\n\n";
+        let msg = " *Thaal Order* \n\n";
         msg += `*Thaal Quantity:* ${this.thaalQuantity}\n\n`;
         msg += "*Selections:*\n";
 
