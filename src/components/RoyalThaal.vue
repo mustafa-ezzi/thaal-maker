@@ -19,10 +19,17 @@
         </div>
       </div>
 
-      <div class="main-container max-w-5xl mx-auto px-5 md:px-8 py-8">
+<div class="main-container max-w-6xl mx-auto px-5 md:px-8 py-8 
+            md:grid md:grid-cols-2 md:gap-10">
+<div class="md:h-[88vh] md:overflow-y-auto pr-2">
 
         <!-- Step Card -->
-        <div v-if="step < categories.length" id="stepBox" class="royal-card" :class="fadeClass">
+<div 
+  v-if="step < categories.length" 
+  id="stepBox" 
+  class="royal-card custom-scrollbar" 
+  :class="fadeClass"
+>
           <div class="text-center mb-10">
             <h2 class="font-playfair text-5xl md:text-7xl font-black text-amber-900 tracking-tighter drop-shadow-lg">
               {{ currentCategory.title }}
@@ -63,7 +70,7 @@
         </div>
 
 <!-- QUANTITY STEP – RESPONSIVE & ROYAL -->
-<div v-if="step === categories.length" class="royal-card fade-in mt-8 md:mt-12">
+<div v-if="step === categories.length" class="royal-card fade-in mt-8 md:mt-12 custom-scrollbar">
   <h2 class="font-playfair text-4xl sm:text-5xl md:text-7xl font-black text-center mb-5 md:mb-6 text-amber-900 leading-tight">
     Number of Thaals
   </h2>
@@ -112,17 +119,33 @@
    
   </div>
 </div>
+</div>
 
         <!-- Desktop Preview -->
-        <div class="thaal-section-desktop hidden md:block mt-16">
-          <div id="thaalPreview" ref="preview" class="preview-wrapper mx-auto">
-            <img src="/thaal.jpg" alt="Golden Thaal" class="thaal-img" />
-            <img src="/download.png" class="center-logo" alt="Logo" />
-            <img v-for="(cat, idx) in chosenCats" :key="cat" class="preview-item" :src="categoryImages[cat]"
-              :style="getPreviewPositionStyle('desktop', idx)" @click="showToast(selected[cat])" />
-          </div>
-        </div>
+        <!-- RIGHT SIDE: STICKY THAAL -->
+<div class="thaal-section-desktop hidden md:block mt-10 md:sticky md:top-10 h-fit">
+  <div id="thaalPreview" ref="preview" class="preview-wrapper mx-auto">
+    <img src="/thaal.jpg" alt="Golden Thaal" class="thaal-img" />
+    <img src="/download.png" class="center-logo" alt="Logo" />
+    <img v-for="(cat, idx) in chosenCats" 
+         :key="cat" 
+         class="preview-item" 
+         :src="categoryImages[cat]"
+         :style="getPreviewPositionStyle('desktop', idx)" />
+  </div>
+</div>
+
       </div>
+      <!-- ROYAL FOOTER – LUXURY & RESPONSIVE -->
+<!-- ROYAL FOOTER -->
+<footer class="mt-20 bg-amber-900 text-amber-200 py-4 text-center text-sm">
+  © {{ new Date().getFullYear() }}  Crafted by 
+  <a href="https://5cube.io" target="_blank" class="text-amber-400 font-semibold hover:text-white transition">
+    5Cube
+  </a>
+</footer>
+
+
 
       <!-- Toast -->
       <div
@@ -181,7 +204,10 @@
   </div>
 </div>
     </div>
+
+
   </div>
+  
 </template>
 
 <script>
@@ -587,7 +613,7 @@
     border-radius: 50%;
     overflow: hidden;
     box-shadow: 0 50px 120px rgba(0, 0, 0, 0.25);
-    border: 12px solid #D4AF37;
+    /* border: 2px solid #D4AF37; */
   }
 
   .preview-wrapper-mobile {
@@ -700,7 +726,7 @@
   }
 
   .center-logo {
-    width: 20%;
+    width: 38%;
     height: 38%;
   }
 
@@ -869,4 +895,30 @@ input:focus + .blur-md {
   0%, 100% { opacity: 0.7; }
   50% { opacity: 1; transform: scaleX(1.05); }
 }
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #b45309 #fff7ed; /* amber-700 on amber-50 */
+}
+
+/* Chrome / Edge / Safari */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #fff7ed; /* amber-50 */
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #fbbf24, #b45309); /* amber gradient */
+  border-radius: 10px;
+  border: 2px solid #fff7ed;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #fbbf24, #92400e); /* darker on hover */
+}
+
 </style>
