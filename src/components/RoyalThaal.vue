@@ -139,7 +139,7 @@
       <!-- ROYAL FOOTER – LUXURY & RESPONSIVE -->
 <!-- ROYAL FOOTER -->
 <footer class="mt-20 bg-amber-900 text-amber-200 py-4 text-center text-sm">
-  © {{ new Date().getFullYear() }}  Crafted by 
+  © {{ new Date().getFullYear() }}  Developed by 
   <a href="https://5cube.io" target="_blank" class="text-amber-400 font-semibold hover:text-white transition">
     5Cube
   </a>
@@ -312,10 +312,15 @@
 
       sanitizeQuantity(e) {
   let val = e.target.value.replace(/[^0-9]/g, ''); // Only numbers
-  val = val === '' ? 1 : parseInt(val);
-  val = Math.max(0, Math.min(100, val)); // Clamp between 1 and 30
-  this.thaalQuantity = val;
-},
+  if (val === '') {
+    this.thaalQuantity = null; // ← allow empty
+  } else {
+    val = parseInt(val);
+    val = Math.max(0, Math.min(100, val)); // clamp 0–100
+    this.thaalQuantity = val;
+  }
+}
+,
 
       changeQuantity(val) {
         const newQty = this.thaalQuantity + val;
