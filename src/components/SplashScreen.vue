@@ -1,6 +1,6 @@
 <!-- src/components/SplashScreen.vue -->
 <template>
-  <div class="fixed inset-0 flex items-center justify-center overflow-hidden bg-amber-50">
+  <div class="fixed inset-0 flex flex-col items-center justify-center overflow-hidden bg-amber-50">
     <!-- Subtle animated background orbs -->
     <div class="absolute inset-0 opacity-20 pointer-events-none">
       <div class="absolute top-0 left-0 w-96 h-96 bg-amber-600 rounded-full mix-blend-multiply blur-3xl animate-blob"></div>
@@ -9,11 +9,9 @@
     </div>
 
     <!-- Main Content -->
-    <div class="relative z-10 text-center px-6">
-
+    <div class="relative z-10 text-center px-6 flex-1 flex flex-col justify-center">
       <!-- Hero Thaal with Logo in Center -->
       <div class="relative inline-block animate-scaleIn">
-        <!-- Golden Thaal Base -->
         <div class="relative">
           <img
             src="/thaal.jpg"
@@ -22,26 +20,19 @@
                    shadow-2xl
                    ring-8 ring-amber-400/30"
           />
-
-          <!-- Logo Perfectly Centered on Thaal -->
           <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div class="relative ">
+            <div class="relative">
               <div class="w-32 h-32 sm:w-30 sm:h-30 md:w-38 md:h-38 
-                     bg-white rounded-full shadow-2xl  p-4
+                     bg-white rounded-full shadow-2xl p-4
                      flex items-center justify-center">
                 <img src="/download.png" alt="Royal Thaal Logo" class="w-full rounded-full h-full object-contain" />
               </div>
-              <!-- Subtle glow ring around logo -->
-              <div class="absolute inset-0 rounded-full blur-xl opacity-60 "></div>
+              <div class="absolute inset-0 rounded-full blur-xl opacity-60"></div>
             </div>
           </div>
-
-          <!-- Outer golden glow ring around entire thaal -->
-          <div class="absolute -inset-4 rounded-full  "></div>
+          <div class="absolute -inset-4 rounded-full"></div>
         </div>
       </div>
-
-      
 
       <!-- CTA Button -->
       <button
@@ -49,7 +40,7 @@
         class="mt-12 px-6 py-6 text-2xl md:text-3xl font-black text-white
                bg-[#8B1E3F] hover:bg-amber-800
                rounded-full shadow-2xl border-4 border-amber-500
-               transform hover:scale-105 active:scale-95  transition-all duration-300
+               transform hover:scale-105 active:scale-95 transition-all duration-300
                opacity-0 animate-fadeInUp animation-delay-1200
                flex items-center gap-4 mx-auto"
       >
@@ -59,8 +50,17 @@
         </svg>
       </button>
     </div>
+
+    <!-- Footer -->
+    <footer class="w-full text-center py-4 bg-amber-900 text-amber-200 text-sm font-medium z-10">
+      © {{ new Date().getFullYear() }}  Developed by 
+  <a href="https://5cube.io" target="_blank" class="text-amber-400 font-semibold hover:text-white transition">
+    5Cube
+  </a>
+    </footer>
   </div>
 </template>
+
 
 <script>
 export default {

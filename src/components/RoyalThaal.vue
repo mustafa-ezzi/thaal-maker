@@ -136,14 +136,13 @@
 </div>
 
       </div>
-      <!-- ROYAL FOOTER – LUXURY & RESPONSIVE -->
-<!-- ROYAL FOOTER -->
+<!-- 
 <footer class="mt-20 bg-amber-900 text-amber-200 py-4 text-center text-sm">
   © {{ new Date().getFullYear() }}  Developed by 
   <a href="https://5cube.io" target="_blank" class="text-amber-400 font-semibold hover:text-white transition">
     5Cube
   </a>
-</footer>
+</footer> -->
 
 
 
@@ -203,7 +202,13 @@
     </div>
   </div>
 </div>
-    </div>
+<footer class="mt-20 bg-amber-900 text-amber-200 py-4 text-center text-sm">
+    © {{ new Date().getFullYear() }} Developed by 
+    <a href="https://5cube.io" target="_blank" class="text-amber-400 font-semibold hover:text-white transition">
+      5Cube
+    </a>
+  </footer>    
+</div>
 
 
   </div>
