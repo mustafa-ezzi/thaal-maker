@@ -8,7 +8,7 @@
 
       <!-- Mobile Sticky Preview -->
       <div
-        class="md:hidden sticky top-0 z-50 backdrop-blur-2xl bg-white/90 border-b-4 border-amber-400 shadow-2xl py-4">
+        class="md:hidden sticky top-0 z-50 backdrop-blur-2xl bg-white/90 border-b-4  shadow-2xl py-4">
         <div class="text-center">
           <div id="thaalPreviewMobile" ref="previewMobile" class="preview-wrapper-mobile mx-auto">
             <img src="/thaal.jpg" alt="Golden Thaal" class="thaal-img-mobile" />
@@ -58,8 +58,8 @@
 
           <!-- Navigation Buttons -->
           <div class="flex flex-col sm:flex-row gap-5 justify-center mt-12 px-4">
-            <button v-if="step > 0" @click="prevStep" class="glass-btn">Back</button>
-            <button v-else @click="finishThaal" class="glass-btn glass-btn-primary text-xl px-14 py-5 font-bold">
+            <button v-if="step > 0" @click="prevStep" class="glass-btn text-white">Back</button>
+            <button v-else @click="finishThaal" class="glass-btn glass-btn-primary bg-[#5D0B0C] text-xl px-14 py-5 font-bold">
               Finish Thaal
             </button>
           </div>
@@ -119,7 +119,7 @@
 
         <!-- Desktop Preview -->
         <!-- RIGHT SIDE: STICKY THAAL -->
-<div class="thaal-section-desktop hidden md:block mt-10 md:sticky md:top-10 h-fit">
+<div class="thaal-section-desktop hidden md:block mt-[135px] md:sticky md:top-10 h-fit">
   <div id="thaalPreview" ref="preview" class="preview-wrapper mx-auto">
     <img src="/thaal.jpg" alt="Golden Thaal" class="thaal-img" />
     <img src="/download.png" class="center-logo" alt="Logo" />
@@ -187,12 +187,12 @@
     </div>
   </div>
 </div>
-<footer class="mt-20 bg-amber-900 text-amber-200 py-4 text-center text-sm">
-    © {{ new Date().getFullYear() }} Developed by 
-    <a href="https://5cube.io" target="_blank" class="text-red-700 font-bold hover:text-white transition">
-      5cube
-    </a>
-  </footer>    
+<footer class="w-full text-center py-4 text-black text-sm font-medium z-10">
+      © {{ new Date().getFullYear() }}  Developed by 
+  <a href="https://5cube.io" target="_blank" class="text-red-700 font-semibold">
+    5cube
+  </a>
+    </footer>   
 </div>
 
 
@@ -731,10 +731,10 @@
   }
 
   .glass-btn {
-    background: rgba(255, 255, 255, 0.3);
+    background: #5D0B0C;
     backdrop-filter: blur(16px);
     border: 2px solid #D4AF37;
-    color: #5D4037;
+    /* color: #5D4037; */
     font-weight: 800;
     font-size: 1.1rem;
     padding: 14px 32px;
@@ -745,13 +745,13 @@
 
   .glass-btn:hover:not(:disabled) {
     transform: translateY(-6px);
-    background: rgba(255, 255, 255, 0.5);
+    background: rgb(80, 1, 1);
     border-color: #8B1E3F;
     box-shadow: 0 20px 50px rgba(139, 30, 63, 0.25);
   }
 
   .glass-btn-primary {
-    background: linear-gradient(135deg, #8B1E3F, #A52A2A);
+    background: #5D0B0C;
     color: white;
     border: 2px solid #D4AF37;
     box-shadow: 0 10px 40px rgba(139, 30, 63, 0.4);

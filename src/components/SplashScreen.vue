@@ -22,7 +22,7 @@
           />
           <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
             <div class="relative">
-              <div class="w-32 h-32 sm:w-30 sm:h-30 md:w-38 md:h-38 
+              <div class="w-32 h-32 sm:w-30 sm:h-30 md:w-48 md:h-48 
                      bg-white rounded-full shadow-2xl p-4
                      flex items-center justify-center">
                 <img src="/download.png" alt="Royal Thaal Logo" class="w-full rounded-full h-full object-contain" />
@@ -38,7 +38,7 @@
       <button
         @click="$emit('start')"
         class="mt-12 px-6 py-6 text-2xl md:text-3xl font-black text-white
-               bg-[#8B1E3F] hover:bg-amber-800
+               bg-[#5D0B0C] hover:bg-[#420101]
                rounded-full shadow-2xl border-4 border-amber-500
                transform hover:scale-105 active:scale-95 transition-all duration-300
                opacity-0 animate-fadeInUp animation-delay-1200
@@ -52,9 +52,9 @@
     </div>
 
     <!-- Footer -->
-    <footer class="w-full text-center py-4 bg-amber-900 text-amber-200 text-sm font-medium z-10">
+    <footer class="w-full text-center py-4 text-black text-sm font-medium z-10">
       © {{ new Date().getFullYear() }}  Developed by 
-  <a href="https://5cube.io" target="_blank" class="text-red-700 font-semibold hover:text-white transition">
+  <a href="https://5cube.io" target="_blank" class="text-red-700 font-semibold">
     5cube
   </a>
     </footer>
