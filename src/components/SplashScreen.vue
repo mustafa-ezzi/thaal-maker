@@ -54,8 +54,8 @@
     <!-- Footer -->
     <footer class="w-full text-center py-4 bg-amber-900 text-amber-200 text-sm font-medium z-10">
       © {{ new Date().getFullYear() }}  Developed by 
-  <a href="https://5cube.io" target="_blank" class="text-amber-400 font-semibold hover:text-white transition">
-    5Cube
+  <a href="https://5cube.io" target="_blank" class="text-red-700 font-semibold hover:text-white transition">
+    5cube
   </a>
     </footer>
   </div>

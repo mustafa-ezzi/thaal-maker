@@ -3,7 +3,7 @@
   <div>
     <SplashScreen v-if="!started" @start="started = true" />
 
-    <div v-else class="fixed inset-0 overflow-y-auto bg-gradient-to-br from-amber-50 via-rose-50 to-orange-50"
+    <div v-else class="fixed inset-0 overflow-y-auto bg-gradient-to-br from-amber-50 via-rose-50 to-orange-50 custom-scrollbar"
       :style="rootBg">
 
       <!-- Mobile Sticky Preview -->
@@ -21,13 +21,13 @@
 
 <div class="main-container max-w-6xl mx-auto px-5 md:px-8 py-8 
             md:grid md:grid-cols-2 md:gap-10">
-<div class="md:h-[88vh] md:overflow-y-auto pr-2">
+<div class="md:h-[88vh] md:overflow-y-auto pr-2 custom-scrollbar">
 
         <!-- Step Card -->
 <div 
   v-if="step < categories.length" 
   id="stepBox" 
-  class="royal-card custom-scrollbar" 
+  class="royal-card " 
   :class="fadeClass"
 >
           <div class="text-center mb-10">
@@ -132,17 +132,6 @@
 </div>
 
       </div>
-<!-- 
-<footer class="mt-20 bg-amber-900 text-amber-200 py-4 text-center text-sm">
-  © {{ new Date().getFullYear() }}  Developed by 
-  <a href="https://5cube.io" target="_blank" class="text-amber-400 font-semibold hover:text-white transition">
-    5Cube
-  </a>
-</footer> -->
-
-
-
-      <!-- Toast -->
       <div
         class="toast fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-8 py-4 rounded-full bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold shadow-2xl text-base border-4 border-amber-400"
         :class="{ 'show': toastMsg }">
@@ -164,7 +153,7 @@
       <!-- Header -->
       <div class="text-center mb-8">
         <h2 class="text-4xl sm:text-5xl font-playfair font-black text-amber-900 leading-tight">
-          Your Royal Thaal is Ready!
+          Your Thaal is Ready!
         </h2>
         <div class="mt-4 w-24 h-1 bg-amber-600 mx-auto rounded-full"></div>
       </div>
@@ -200,8 +189,8 @@
 </div>
 <footer class="mt-20 bg-amber-900 text-amber-200 py-4 text-center text-sm">
     © {{ new Date().getFullYear() }} Developed by 
-    <a href="https://5cube.io" target="_blank" class="text-amber-400 font-semibold hover:text-white transition">
-      5Cube
+    <a href="https://5cube.io" target="_blank" class="text-red-700 font-bold hover:text-white transition">
+      5cube
     </a>
   </footer>    
 </div>
@@ -502,7 +491,7 @@
         });
 
         const link = document.createElement("a");
-        link.download = `royal-thaal-${Date.now()}.png`;
+        link.download = `thaal-${Date.now()}.png`;
         link.href = canvas.toDataURL();
         link.click();
       },
@@ -902,29 +891,44 @@ input:focus + .blur-md {
   50% { opacity: 1; transform: scaleX(1.05); }
 }
 
+/* 🔥 GLOBAL / SCOPED ROYAL GOLD SCROLLBAR */
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: #b45309 #fff7ed; /* amber-700 on amber-50 */
+  scrollbar-color: #d4af37 #fff8e7; /* thumb | track */
 }
 
-/* Chrome / Edge / Safari */
+/* 🟡 Chrome / Safari / Edge */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 10px;
+  width: 12px;
+  height: 12px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #fff7ed; /* amber-50 */
-  border-radius: 10px;
+  background: linear-gradient(180deg, #fff7e6, #fdeacd);
+  border-radius: 12px;
+  border: 2px solid #fbe7c3;
+  box-shadow: inset 0 0 6px rgba(139, 30, 63, 0.1);
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #fbbf24, #b45309); /* amber gradient */
-  border-radius: 10px;
-  border: 2px solid #fff7ed;
+  background: linear-gradient(180deg, #d4af37, #b8891a, #d4af37);
+  border-radius: 12px;
+  border: 2px solid #fdf4e1;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.6),
+              inset 0 0 6px rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #fbbf24, #92400e); /* darker on hover */
+  background: linear-gradient(180deg, #e6c556, #c49a24, #e6c556);
+  box-shadow: 0 0 14px rgba(212, 175, 55, 0.8),
+              inset 0 0 8px rgba(255, 255, 255, 0.8);
+  transform: scale(1.05);
 }
+
+.custom-scrollbar::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
 
 </style>
